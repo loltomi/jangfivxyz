@@ -13,10 +13,21 @@
             font-family: Arial, sans-serif;
             color: white;
             height: 100vh;
-            overflow: hidden; /* unlocks after intro */
+            overflow: hidden;
         }
 
-        /* INTRO VIDEO FULLSCREEN */
+        /* 🔥 BACKGROUND VIDEO */
+        #bgVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* INTRO VIDEO */
         #intro {
             position: fixed;
             top: 0;
@@ -65,7 +76,6 @@
             transition: 0.25s ease;
         }
 
-        /* ✨ Glow hover effect */
         .nav-links a:hover {
             text-shadow: 0 0 10px white, 0 0 20px white;
         }
@@ -87,7 +97,6 @@
             filter: drop-shadow(0 0 0px white);
         }
 
-        /* ✨ Glow hover effect for icons */
         .socials img:hover {
             transform: scale(1.2);
             filter: drop-shadow(0 0 10px white);
@@ -96,6 +105,11 @@
 </head>
 
 <body>
+
+    <!-- 🔥 BACKGROUND VIDEO -->
+    <video id="bgVideo" autoplay muted loop playsinline>
+        <source src="background.mp4" type="video/mp4">
+    </video>
 
     <!-- INTRO VIDEO -->
     <div id="intro">
@@ -106,16 +120,39 @@
 
     <script>
         const intro = document.getElementById("intro");
-        const video = document.getElementById("introVideo");
+        const introVideo = document.getElementById("introVideo");
+        const bgVideo = document.getElementById("bgVideo");
 
-        video.onended = () => {
+        /* INTRO FADEOUT */
+        introVideo.onended = () => {
             intro.style.opacity = 0;
 
             setTimeout(() => {
                 intro.remove();
-                document.body.style.overflow = "auto"; // show site again
+                document.body.style.overflow = "auto";
             }, 800);
         };
+
+        /* 🔥 FIX FOR BACK/FORWARD BUG + RELOAD BUG */
+        function ensureBgVideoPlays() {
+            if (bgVideo.paused) {
+                bgVideo.play().catch(() => {});
+            }
+        }
+
+        /* When page is loaded normally */
+        window.addEventListener("load", ensureBgVideoPlays);
+
+        /* When returning from another page using back button */
+        window.addEventListener("pageshow", (event) => {
+            if (event.persisted) {
+                ensureBgVideoPlays();
+            }
+        });
+
+        /* Extra safety: re-check after slight delay */
+        setTimeout(ensureBgVideoPlays, 500);
+        setTimeout(ensureBgVideoPlays, 1500);
     </script>
 
     <!-- NAVBAR -->
@@ -123,26 +160,21 @@
         <img src="yng.png" alt="Logo">
 
         <div class="nav-links">
-            <a href="https://open.spotify.com/artist/0R8LFZUpqFUM8XTA0xS11t?si=5U4jb6fUSwCBN9JsnB_oiA">MUSIC</a>
+            <a href="https://open.spotify.com/artist/0R8LFZUpqFUM8XTA0xS11t?si=5U4jb6fUSwCBN9JsnB_oiA" target="_blank" rel="noopener noreferrer">MUSIC</a>
             <a href="https://yungfeav.xyz/tour">TOUR</a>
-            <a href="https://www.youtube.com/@FeavYT">VIDEOS</a>
-            <a href="https://www.roblox.com/games/18178284395/Plasma-Incremental">GAME</a>
+            <a href="https://www.youtube.com/@FeavYT" target="_blank" rel="noopener noreferrer">VIDEOS</a>
+            <a href="https://www.roblox.com/games/18178284395/Plasma-Incremental" target="_blank" rel="noopener noreferrer">GAME</a>
         </div>
     </div>
 
     <!-- SOCIAL ICONS -->
     <div class="socials">
-        <a href="https://www.tiktok.com/@yungfeav" target="_blank"><img src="tiktok.png" alt="TikTok"></a>
-        <a href="https://www.instagram.com/yungfeav" target="_blank"><img src="instagram.png" alt="Instagram"></a>
-        <a href="https://www.youtube.com/@FeavYT" target="_blank"><img src="youtube.png" alt="YouTube"></a>
-        <a href="https://www.twitch.tv/yungfeav" target="_blank"><img src="twitch.png" alt="Twitch"></a>
-        <a href="https://twitter.com/@lol_tomii" target="_blank"><img src="twitter.png" alt="Twitter"></a>
+        <a href="https://www.tiktok.com/@yungfeav" target="_blank" rel="noopener noreferrer"><img src="tiktok.png" alt="TikTok"></a>
+        <a href="https://www.instagram.com/yungfeav" target="_blank" rel="noopener noreferrer"><img src="instagram.png" alt="Instagram"></a>
+        <a href="https://www.youtube.com/@FeavYT" target="_blank" rel="noopener noreferrer"><img src="youtube.png" alt="YouTube"></a>
+        <a href="https://www.twitch.tv/yungfeav" target="_blank" rel="noopener noreferrer"><img src="twitch.png" alt="Twitch"></a>
+        <a href="https://twitter.com/@lol_tomii" target="_blank" rel="noopener noreferrer"><img src="twitter.png" alt="Twitter"></a>
     </div>
 
 </body>
 </html>
-
-
-
-
-
