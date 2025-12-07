@@ -16,7 +16,6 @@
             overflow: hidden;
         }
 
-        /* 🔥 BACKGROUND VIDEO */
         #bgVideo {
             position: fixed;
             top: 0;
@@ -27,7 +26,6 @@
             z-index: -1;
         }
 
-        /* INTRO VIDEO */
         #intro {
             position: fixed;
             top: 0;
@@ -48,7 +46,6 @@
             object-fit: cover;
         }
 
-        /* NAVBAR */
         .navbar {
             position: absolute;
             top: 20px;
@@ -80,7 +77,6 @@
             text-shadow: 0 0 10px white, 0 0 20px white;
         }
 
-        /* SOCIAL ICONS */
         .socials {
             position: absolute;
             bottom: 20px;
@@ -106,12 +102,10 @@
 
 <body>
 
-    <!-- 🔥 BACKGROUND VIDEO -->
     <video id="bgVideo" autoplay muted loop playsinline>
         <source src="background.mp4" type="video/mp4">
     </video>
 
-    <!-- INTRO VIDEO -->
     <div id="intro">
         <video id="introVideo" autoplay muted playsinline>
             <source src="intro.mp4" type="video/mp4">
@@ -123,7 +117,6 @@
         const introVideo = document.getElementById("introVideo");
         const bgVideo = document.getElementById("bgVideo");
 
-        /* INTRO FADEOUT */
         introVideo.onended = () => {
             intro.style.opacity = 0;
 
@@ -133,29 +126,24 @@
             }, 800);
         };
 
-        /* 🔥 FIX FOR BACK/FORWARD BUG + RELOAD BUG */
         function ensureBgVideoPlays() {
             if (bgVideo.paused) {
                 bgVideo.play().catch(() => {});
             }
         }
 
-        /* When page is loaded normally */
         window.addEventListener("load", ensureBgVideoPlays);
 
-        /* When returning from another page using back button */
         window.addEventListener("pageshow", (event) => {
             if (event.persisted) {
                 ensureBgVideoPlays();
             }
         });
 
-        /* Extra safety: re-check after slight delay */
         setTimeout(ensureBgVideoPlays, 500);
         setTimeout(ensureBgVideoPlays, 1500);
     </script>
 
-    <!-- NAVBAR -->
     <div class="navbar">
         <img src="yng.png" alt="Logo">
 
@@ -167,7 +155,6 @@
         </div>
     </div>
 
-    <!-- SOCIAL ICONS -->
     <div class="socials">
         <a href="https://www.tiktok.com/@yungfeav" target="_blank" rel="noopener noreferrer"><img src="tiktok.png" alt="TikTok"></a>
         <a href="https://www.instagram.com/yungfeav" target="_blank" rel="noopener noreferrer"><img src="instagram.png" alt="Instagram"></a>
@@ -178,3 +165,4 @@
 
 </body>
 </html>
+
